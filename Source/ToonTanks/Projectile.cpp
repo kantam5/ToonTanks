@@ -4,6 +4,8 @@
 #include "Projectile.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/DamageType.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -26,7 +28,6 @@ void AProjectile::BeginPlay()
 	Super::BeginPlay();
 
 	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
-	
 }
 
 void AProjectile::Tick(float DeltaTime)
@@ -37,12 +38,22 @@ void AProjectile::Tick(float DeltaTime)
 // HitComp : 가서 부딪친 물체의 컴포넌트 종류
 // OtherActor : 발사되서 부딪힌 물체 그자체
 // OtherComp : 발사되서 부딪힌 물체의 컴포넌트 종류
+// 여기서 ApplyDamage를 호출하여 OtherActor의 OnTakeAnyDamage가 호출되어 OtherActor의 HealthComponent의 DamageTaken이 호출된다. 
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	FString HitCompName = HitComp->GetName();
-	FString OtherActorName = OtherActor->GetName();
-	FString OtherCompName = OtherComp->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("HitCompName: %s"), *HitCompName);
-	UE_LOG(LogTemp, Warning, TEXT("OtherActorName: %s"), *OtherActorName);
-	UE_LOG(LogTemp, Warning, TEXT("OtherCompName: %s"), *OtherCompName);
+	auto MyOwner = GetOwner();
+
+	if (MyOwner == nullptr)
+	{
+		return;
+	}
+
+	auto MyOwnerInstigator = MyOwner->GetInstigatorController();
+	auto DamageTypeClass = UDamageType::StaticClass();
+
+	if (OtherActor && OtherActor != this && OtherActor != MyOwner)
+	{
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageTypeClass);
+		Destroy();
+	}
 }
