@@ -11,6 +11,8 @@
 - Turren Mesh
 - Capsule
 - Projectile Spawn Point
+- Rotate Turret
+- Fire
 */
 
 UCLASS()
@@ -25,6 +27,8 @@ public:
 protected:
 	void RotateTurret(FVector LookAtTarget);
 
+	void Fire();
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Coponents", meta = (AllowPrivateAccess = "true"))
 	class UCapsuleComponent* CapsuleComp;
@@ -38,5 +42,8 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Coponents", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* ProjectileSpawnPoint;
 
-
+	// <>안의 클래스를 변수가 표현한다. 컴포넌트가 아니다.
+	// C++의 Projectile과 그의 자식인 BP_Projectile도 선택할 수 있다. 
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	TSubclassOf<class AProjectile> ProjectileClass;
 };
