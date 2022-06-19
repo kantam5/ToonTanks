@@ -24,6 +24,12 @@ ABasePawn::ABasePawn()
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
 }
 
+// 호출은 ToonTanksGameMode에서
+void ABasePawn::HandleDesturction()
+{
+	// TODO : Visual/Sound Effects
+}
+
 void ABasePawn::RotateTurret(FVector LookAtTarget)
 {
 	FVector ToTarget = LookAtTarget - TurretMesh->GetComponentLocation();

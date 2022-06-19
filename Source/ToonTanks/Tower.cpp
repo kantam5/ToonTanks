@@ -17,6 +17,14 @@ void ATower::Tick(float DeltaTime)
 	}
 }
 
+// 호출은 ToonTanksGameMode에서
+void ATower::HandleDestruction()
+{
+	Super::HandleDesturction();
+
+	Destroy();
+}
+
 void ATower::BeginPlay()
 {
 	Super::BeginPlay();

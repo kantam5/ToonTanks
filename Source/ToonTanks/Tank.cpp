@@ -31,11 +31,11 @@ void ATank::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Check nullptr
-	if (PlayerControllerRef)
+	if (TankPlayerController)
 	{
 		FHitResult HitResult;
 
-		PlayerControllerRef->GetHitResultUnderCursor(
+		TankPlayerController->GetHitResultUnderCursor(
 			ECollisionChannel::ECC_Visibility, 
 			false, 
 			HitResult
@@ -45,11 +45,22 @@ void ATank::Tick(float DeltaTime)
 	}
 }
 
+// 호출은 ToonTanksGameMode에서
+void ATank::HandleDesturction()
+{
+	Super::HandleDesturction();
+
+	// 게임에서 표시를 하지 않고 Tick도 막는다. 
+	// 입력을 막는거는 ToonTanksGameMode
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
+}
+
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlayerControllerRef = Cast<APlayerController>(GetController());
+	TankPlayerController = Cast<APlayerController>(GetController());
 }
 
 void ATank::Move(float Value)
