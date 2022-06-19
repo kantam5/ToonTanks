@@ -6,6 +6,11 @@
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
+/*
+- 콜리전 프리셋 : BlockAllDynamic
+- 콜리전 활성화됨 : Collision Enabled
+*/
+
 UCLASS()
 class TOONTANKS_API AProjectile : public AActor
 {
@@ -25,6 +30,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	class UProjectileMovementComponent* ProjectileMovementComponent;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 public:
 	// Called every frame
