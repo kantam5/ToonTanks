@@ -35,6 +35,8 @@ void AToonTanksGameMode::HandleGameStart()
 	Tank = Cast<ATank>(UGameplayStatics::GetPlayerPawn(this, 0));
 	ToonTanksPlayerController = Cast<AToonTanksPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 
+	StartGame();
+
 	// 시작하기 전엔 움직일 수 없음
 	if (ToonTanksPlayerController)
 	{
@@ -47,6 +49,7 @@ void AToonTanksGameMode::HandleGameStart()
 			true
 		);
 
+		// 외부에 있는 함수를 타이머로 호출한다. 
 		GetWorld()->GetTimerManager().SetTimer(
 			PlayerEnableTimerHandle,
 			PlayerEnableTimeDelegate,
