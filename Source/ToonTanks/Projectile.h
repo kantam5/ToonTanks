@@ -40,6 +40,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	UParticleSystem* HitParticles;
 
+	UPROPERTY(VisibleAnywhere, Category = "Combat")
+	UParticleSystemComponent* TrailParticles;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

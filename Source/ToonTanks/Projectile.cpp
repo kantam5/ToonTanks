@@ -6,6 +6,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/DamageType.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -20,6 +21,9 @@ AProjectile::AProjectile()
 
 	ProjectileMovementComponent->MaxSpeed = 1300.0f;
 	ProjectileMovementComponent->InitialSpeed = 1300.0f;
+
+	TrailParticles = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Smoke Trail"));
+	TrailParticles->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
