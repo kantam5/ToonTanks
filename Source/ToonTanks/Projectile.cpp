@@ -18,7 +18,6 @@ AProjectile::AProjectile()
 	RootComponent = ProjectileMesh;
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
-
 	ProjectileMovementComponent->MaxSpeed = 1300.0f;
 	ProjectileMovementComponent->InitialSpeed = 1300.0f;
 
@@ -32,6 +31,15 @@ void AProjectile::BeginPlay()
 	Super::BeginPlay();
 
 	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+
+	if (LaunchSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(
+			this,
+			LaunchSound,
+			GetActorLocation()
+		);
+	}
 }
 
 void AProjectile::Tick(float DeltaTime)
@@ -67,6 +75,15 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 				HitParticles,
 				GetActorLocation(),
 				GetActorRotation()
+			);
+		}
+
+		if (HitSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(
+				this,
+				HitSound,
+				GetActorLocation()
 			);
 		}
 		
