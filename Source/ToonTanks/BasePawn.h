@@ -48,4 +48,7 @@ private:
 	// C++의 Projectile과 그의 자식인 BP_Projectile도 선택할 수 있다. 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	TSubclassOf<class AProjectile> ProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	UParticleSystem* DeathParticles;
 };
