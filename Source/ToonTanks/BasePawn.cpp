@@ -47,6 +47,11 @@ void ABasePawn::HandleDesturction()
 			GetActorLocation()
 		);
 	}
+
+	if (DeathCameraShakeClass)
+	{
+		GetWorld()->GetFirstPlayerController()->ClientPlayCameraShake(DeathCameraShakeClass);
+	}
 }
 
 void ABasePawn::RotateTurret(FVector LookAtTarget)
