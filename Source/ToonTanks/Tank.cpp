@@ -54,6 +54,7 @@ void ATank::HandleDesturction()
 	// 입력을 막는거는 ToonTanksGameMode
 	SetActorHiddenInGame(true);
 	SetActorTickEnabled(false);
+	bAlive = false;
 }
 
 void ATank::BeginPlay()
